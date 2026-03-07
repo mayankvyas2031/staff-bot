@@ -2,12 +2,14 @@ import pandas as pd
 from telegram import Update
 from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTypes
 
-# Load Google Sheet
-url = "https://docs.google.com/spreadsheets/d/1za1-tM5Bq2VSpYRaznRSZDyaMrzjzImBY57fbp_RQSY/export?format=csv"
-data = pd.read_csv(url)
+print("Loading Google Sheet...")
 
-# Make column names lowercase
+url = "https://docs.google.com/spreadsheets/d/1za1-tM5Bq2VSpYRaznRSZDyaMrzjzImBY57fbp_RQSY/export?format=csv"
+
+data = pd.read_csv(url)
 data.columns = data.columns.str.lower()
+
+print("Data loaded successfully")
 
 async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text.strip().lower()
@@ -19,20 +21,21 @@ async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if not result.empty:
         row = result.iloc[0]
-        reply = f"""
-Name: {row['name']}
+
+        reply = f"""Name: {row['name']}
 ID: {row['id']}
 Designation: {row['designation']}
 CLI: {row['cli']}
 HQ: {row['hq']}
-Mobile: {row['mobile']}
-"""
+Mobile: {row['mobile']}"""
     else:
         reply = "No record found."
 
     await update.message.reply_text(reply)
 
-app = ApplicationBuilder().token("8794553685:AAGrr8YTykhyXVMUwYh_44YaUDrxF5LiHv8").build()
+print("Starting bot...")
+
+app = ApplicationBuilder().token("YOUR_NEW_TOKEN").build()
 
 app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, search))
 

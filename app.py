@@ -4,7 +4,7 @@ from telegram.ext import ApplicationBuilder, MessageHandler, filters, ContextTyp
 
 # Load CSV
 data = pd.read_csv("https://docs.google.com/spreadsheets/d/1za1-tM5Bq2VSpYRaznRSZDyaMrzjzImBY57fbp_RQSY/export?format=csv)
-url = https://docs.google.com/spreadsheets/d/1za1-tM5Bq2VSpYRaznRSZDyaMrzjzImBY57fbp_RQSY/export?format=csv
+                   
 async def search(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.message.text.strip().lower()
 
